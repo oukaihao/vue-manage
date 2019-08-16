@@ -59,6 +59,8 @@ export default {
               if(res.data.meta.status == 200){
 
                  window.localStorage.setItem('token',res.data.data.token)
+                 console.log(res.data.data.token);
+                 
                  this.$message.success({message:res.data.meta.msg,duration:1500})
                  this.$router.push('/index')
 

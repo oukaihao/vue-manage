@@ -13,3 +13,12 @@ export const login = ({username, password}) => {
     }
     )
 }
+
+//左侧菜单请求
+export const menus = () => {
+    return http.get('/menus',{
+        headers:{
+            Authorization: window.localStorage.getItem('token')
+        }
+    })
+}
