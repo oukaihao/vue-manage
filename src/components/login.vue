@@ -14,7 +14,7 @@
         
       >
         <el-form-item label="用户名" prop="username">
-          <el-input type="password" v-model="ruleForm.username" autocomplete="off"></el-input>
+          <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+//导入login http请求组件
+import { login } from './http/http'
 export default {
     data() {
       return {
@@ -51,9 +53,21 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+
+            login(this.ruleForm)
+            .then(res => {
+              if(res.data.meta.status == 200){
+
+                 window.localStorage.setItem('token',res.data.data.token)
+                 this.$message.success({message:res.data.meta.msg,duration:1500})
+                 this.$router.push('/index')
+
+               }else{
+                 this.$message.error({message:res.data.meta.msg,duration:1500})
+               }
+            })
           } else {
-            console.log('error submit!!');
+            
             return false;
           }
         });
