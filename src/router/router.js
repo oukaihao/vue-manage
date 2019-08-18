@@ -6,9 +6,9 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 //导入组件
-import login from '../login.vue'
-import index from '../index.vue'
-import users from '../userlist.vue'
+import login from '../components/login.vue'
+import index from '../components/index.vue'
+import users from '../components/userlist.vue'
 
 //创建路由规则
 const routes = [

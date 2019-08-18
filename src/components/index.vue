@@ -61,7 +61,7 @@ export default {
   },
   created() {
       menus().then(res => {
-          console.log(res);
+          //console.log(res);
           this.menuslist = res.data.data
       })
   },
@@ -89,6 +89,7 @@ export default {
 
   .my-main {
     background-color: rgb(233, 238, 243);
+    padding: 0 20px;
   }
 }
 </style>

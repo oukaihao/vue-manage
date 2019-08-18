@@ -13,7 +13,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 //导入路由组件
-import router from './components/router/router'
+import router from './router/router'
 
 new Vue({
   //挂载
