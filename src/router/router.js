@@ -6,9 +6,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 //导入组件
-import login from '../components/login.vue'
-import index from '../components/index.vue'
-import users from '../components/userlist.vue'
+import login from '../../veiw/login.vue'
+import index from '../../veiw/index.vue'
+import users from '../../veiw/userlist.vue'
+import roles from '../../veiw/rolelist.vue'
+import rights from '../../veiw/rights.vue'
 
 //创建路由规则
 const routes = [
@@ -18,7 +20,9 @@ const routes = [
       path:'/index',
       component:index,
       children:[
-        { path:'/users',component:users}
+        { path:'/users',component:users},
+        { path:'/roles',component:roles},
+        { path:'/rights',component:rights},
       ]
     }
   ]

@@ -14,10 +14,10 @@
         
       >
         <el-form-item label="用户名" prop="username">
-          <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
+          <el-input type="text" v-model.trim="ruleForm.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+          <el-input type="password" v-model.trim="ruleForm.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')" class="submitbtn">提交</el-button>
@@ -29,7 +29,7 @@
 
 <script>
 //导入login http请求组件
-import { login } from './http/http'
+import { login } from '../src/components/http/http'
 export default {
     data() {
       return {

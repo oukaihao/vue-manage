@@ -88,7 +88,17 @@ export const userdelete = (uId) => {
     return http.delete(`users/${uId}`)
 }
 
+//角色列表请求
+export const roleslist = () => {
+    return http.get('roles')
+}
+
 //角色分配请求
 export const roleallot = (uId,{ rid }) => {
     return http.put(`users/${uId}/role`,{ rid })
+}
+
+//权限列表请求
+export const rights = (type) => {
+    return http.get(`rights/${type}`)
 }

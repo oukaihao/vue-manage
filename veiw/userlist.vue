@@ -1,11 +1,7 @@
 <template>
   <div>
     <!--面包屑导航-->
-    <el-breadcrumb separator-class="el-icon-arrow-right" class="my-bread">
-      <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <bread first="用户管理" second="用户列表"></bread>
     <!--layout布局-->
     <el-row>
       <el-col :span="6">
@@ -120,16 +116,12 @@
     <el-dialog title="分配角色" :visible.sync="dialogFormVisibless">
       <el-form :model="userform">
         <el-form-item label="当前用户" :label-width="formLabelWidth" prop="username">
-          <span>admin</span>
+          <span>{{userform.username}}</span>
         </el-form-item>
         <el-form-item label="请选择角色" :label-width="formLabelWidth">
-          <el-select v-model="userform.roleID" placeholder="">
+          <el-select v-model="userform.rid" placeholder="">
             <el-option label="请选择角色" value="" :disabled="true"></el-option>
-            <el-option label="主管" value="30">主管</el-option>
-            <el-option label="测试角色一" value="40">测试角色一</el-option>
-            <el-option label="测试角色二" value="50"></el-option>
-            <el-option label="超级管理员" value="20"></el-option>
-            <el-option label="text" value="10"></el-option>
+            <el-option :label="item.roleName" :value="item.id" v-for="(item,index) in rolelist" :key="index+1"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -151,16 +143,20 @@ import {
   userqurey,
   useredit,
   userdelete,
-  roleallot
-} from "./http/http";
+  roleallot,
+  roleslist
+} from "../src/components/http/http";
 
 export default {
   data() {
     return {
       //角色分配的数据表单
       userform:{
-        roleID:''
+        rid:0,
+        username:''
       },
+      //角色列表
+      rolelist:[],
       //点击操作栏把点击的目标id保存
       id: "",
       //表单验证规则
@@ -227,11 +223,16 @@ export default {
   methods: {
     //角色分配提交函数
     rolesubmit(){
-      roleallot(this.id,{ rid:this.userform.roleID })
+      roleallot(this.id,{ rid:this.userform.rid })
       .then(res => {
-        //console.log(res);
+        
         if(res.data.meta.status == 200){
           this.$message.success(res.data.meta.msg)
+
+          this.userform.rid = res.data.data.rid
+
+          //console.log(res.data.data);
+          this.getUserList();
           this.dialogFormVisibless = false
         }else{
           this.$message.error(res.data.meta.msg)
@@ -243,12 +244,17 @@ export default {
     userrole(user){
       this.dialogFormVisibless = true
       this.id = user.id
-      userqurey(user.id).then(res => {
-        //console.log(res);
-        if (res.status == 200) {
-          this.userform.roleID = res.data.data.rid + '';
+      this.userform.username = user.username
+      let rid;
+
+      for(let i = 0; i < this.rolelist.length; i++){
+        if(user.role_name == this.rolelist[i].roleName){
+          rid = this.rolelist[i].id
+          break
         }
-      });
+      }
+      this.userform.rid = rid
+
     },
     //用户点击删除触发函数
     userdelete(user) {
@@ -284,7 +290,7 @@ export default {
             email: this.ruleForm.email,
             mobile: this.ruleForm.mobile
           }).then(res => {
-            //console.log(res);
+            console.log(res);
             if (res.data.meta.status == 200) {
               this.$message.success("修改成功");
               this.getUserList();
@@ -308,14 +314,12 @@ export default {
         email: "",
         mobile: ""
       };
-      this.id = user.id;
+
       this.dialogFormVisibles = true;
-      userqurey(user.id).then(res => {
-        console.log(res);
-        if (res.status == 200) {
-          this.ruleForm = res.data.data;
-        }
-      });
+      this.ruleForm.username = user.username
+      this.ruleForm.email = user.email
+      this.ruleForm.mobile = user.mobile
+      
     },
     //用户状态点击触发函数
     editstaus(userinfo) {
@@ -386,17 +390,17 @@ export default {
   //数据，方法初始化完成发送请求加载userlist
   created() {
     this.getUserList();
+
+    roleslist().then(res => {
+      
+      this.rolelist = res.data.data
+      //console.log(res.data.data);
+    })
   },
   name: "userlist"
 };
 </script>
 
 <style lang="less" scoped>
-.my-bread {
-  font-size: 15px;
-  height: 45px;
-  line-height: 45px;
-  padding-left: 15px;
-  background-color: #d3dce6;
-}
+
 </style>

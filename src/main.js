@@ -6,6 +6,10 @@ Vue.config.productionTip = false
 //导入全局样式包
 import './assets/css/basic.css'
 
+//导入全局面包屑
+import bread from './components/bread.vue'
+Vue.component('bread',bread)
+
 
 //导入elementUI
 import ElementUI from 'element-ui';
