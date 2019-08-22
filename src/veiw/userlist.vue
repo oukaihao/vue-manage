@@ -145,7 +145,7 @@ import {
   userdelete,
   roleallot,
   roleslist
-} from "../src/components/http/http";
+} from "../http/http";
 
 export default {
   data() {
@@ -230,7 +230,6 @@ export default {
           this.$message.success(res.data.meta.msg)
 
           this.userform.rid = res.data.data.rid
-
           //console.log(res.data.data);
           this.getUserList();
           this.dialogFormVisibless = false
@@ -283,7 +282,7 @@ export default {
         });
     },
     //用户资料点击提交触发函数
-    editsubmit(formName, id) {
+    editsubmit(formName,id ) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           useredit(id, {
@@ -314,7 +313,7 @@ export default {
         email: "",
         mobile: ""
       };
-
+      this.id = user.id
       this.dialogFormVisibles = true;
       this.ruleForm.username = user.username
       this.ruleForm.email = user.email

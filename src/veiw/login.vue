@@ -29,7 +29,7 @@
 
 <script>
 //导入login http请求组件
-import { login } from '../src/components/http/http'
+import { login } from '../http/http'
 export default {
     data() {
       return {

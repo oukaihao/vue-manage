@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { rights } from "../src/components/http/http";
+import { rights } from "../http/http";
 export default {
   data() {
     return {

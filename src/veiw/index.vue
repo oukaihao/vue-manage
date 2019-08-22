@@ -1,7 +1,7 @@
 <template>
   <el-container class="my-container">
     <el-header class="my-header">
-      <img src="../src/assets/img/logo.png" alt />
+      <img src="../assets/img/logo.png" alt />
       <h2>电商后台管理系统</h2>
       <a href="#" @click.prevent="out">退出</a>
     </el-header>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { menus } from '../src/components/http/http'
+import { menus } from '../http/http'
 export default {
   methods: {
     out() {
