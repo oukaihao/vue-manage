@@ -10,6 +10,12 @@ import './assets/css/basic.css'
 import bread from './components/bread.vue'
 Vue.component('bread',bread)
 
+//导入时间格式化包
+import moment from 'moment'
+
+Vue.filter('formaTime', (value, format) => {
+  return moment(value*1000).format(format)
+})
 
 //导入elementUI
 import ElementUI from 'element-ui';

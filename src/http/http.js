@@ -30,21 +30,21 @@ http.interceptors.request.use(function (config) {
 //响应拦截
 //http.interceptors.response.use(function (response) {
 
-    //if(falg){
-   //     return
-   // }
-    // 对响应数据做点什么
-   // console.log(response);
-    //if(response.data.meta.status == 400 && response.data.meta.msg == '无效token'){
-     //   router.push('/login')
-       // Vue.prototype.$message.error('请先登录！')
-       // falg = true
-   // }
-   // return response;
-  //}, function (error) {
-    // 对响应错误做点什么
-    //return Promise.reject(error);
-  //});
+//if(falg){
+//     return
+// }
+// 对响应数据做点什么
+// console.log(response);
+//if(response.data.meta.status == 400 && response.data.meta.msg == '无效token'){
+//   router.push('/login')
+// Vue.prototype.$message.error('请先登录！')
+// falg = true
+// }
+// return response;
+//}, function (error) {
+// 对响应错误做点什么
+//return Promise.reject(error);
+//});
 
 //login请求
 export const login = ({ username, password }) => {
@@ -81,20 +81,20 @@ export const userlist = ({ query, pagenum, pagesize }) => {
 
 //添加用户请求
 export const adduser = ({ username, password, email, mobile }) => {
-    return http.post('users', 
-         {
+    return http.post('users',
+        {
             username,
             password,
             email,
             mobile
         }
-    
+
     )
 }
 
 //修改用户状态请求
 
-export const userstatus = ( uId,type ) => {
+export const userstatus = (uId, type) => {
     return http.put(`users/${uId}/state/${type}`)
 }
 
@@ -104,8 +104,8 @@ export const userqurey = (uId) => {
 }
 
 //修改用户资料请求
-export const useredit = (uId,{ email,mobile }) => {
-    return http.put(`users/${uId}`,{ email,mobile })
+export const useredit = (uId, { email, mobile }) => {
+    return http.put(`users/${uId}`, { email, mobile })
 }
 
 //删除个人用户请求
@@ -119,8 +119,8 @@ export const roleslist = () => {
 }
 
 //角色分配请求
-export const roleallot = (uId,{ rid }) => {
-    return http.put(`users/${uId}/role`,{ rid })
+export const roleallot = (uId, { rid }) => {
+    return http.put(`users/${uId}/role`, { rid })
 }
 
 //所有权限列表请求
@@ -134,20 +134,20 @@ export const roles = () => {
 }
 
 //删除角色指定权限请求
-export const delroleright = (roleId,rightId) => {
+export const delroleright = (roleId, rightId) => {
     return http.delete(`roles/${roleId}/rights/${rightId}`)
 }
 
 //角色授权请求
-export const roleright = (rid,{ rids }) => {
-    return http.post(`roles/${rid}/rights`,{
+export const roleright = (rid, { rids }) => {
+    return http.post(`roles/${rid}/rights`, {
         rids
     })
 }
 
 //角色资料编辑请求
-export const rolesedit = (roleID,{ roleName,roleDesc }) => {
-    return http.put(`roles/${roleID}`,{
+export const rolesedit = (roleID, { roleName, roleDesc }) => {
+    return http.put(`roles/${roleID}`, {
         roleName,
         roleDesc
     })
@@ -159,8 +159,8 @@ export const delroles = (id) => {
 }
 
 //添加角色请求
-export const addrolrs = ( { roleName,roleDesc } ) => {
-    return http.post('roles',{
+export const addrolrs = ({ roleName, roleDesc }) => {
+    return http.post('roles', {
         roleName,
         roleDesc
     })
@@ -168,5 +168,82 @@ export const addrolrs = ( { roleName,roleDesc } ) => {
 
 //商品分类列表请求
 export const shoplist = (type) => {
-    return http.get('categories',{ type })
+    return http.get('categories', {
+        params: { type }
+    })
+}
+
+//添加商品分类
+export const addcategories = ({ cat_pid, cat_name, cat_level }) => {
+    return http.post('categories', {
+        cat_pid,
+        cat_name,
+        cat_level
+    })
+}
+
+//编辑提交分类
+export const editShopCate = ({ id, cat_name }) => {
+    return http.put(`categories/${id}`, {
+        cat_name
+    })
+}
+
+//删除商品分类
+export const delShopCate = (id) => {
+    return http.delete(`categories/${id}`)
+}
+
+//参数列表
+export const paramsList = (id, { sel }) => {
+    return http.get(`categories/${id}/attributes`, {
+        params: {
+            sel
+        }
+    })
+}
+
+//添加动态参数或者静态属性
+export const paramsPorp = (id, { attr_name, attr_sel, attr_vals }) => {
+    return http.post(`categories/${id}/attributes`, {
+        attr_name,
+        attr_sel,
+        attr_vals
+    })
+}
+
+//商品列表数据
+export const shopList = ({ query, pagenum, pagesize }) => {
+    return http.get('goods', {
+        params: {
+            query,
+            pagenum,
+            pagesize
+        }
+    })
+}
+
+//订单列表
+export const ordersHttp = ({ pagenum, pagesize }) => {
+    return http.get('orders', {
+        params: {
+            pagenum,
+            pagesize
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+//数据统计报表
+export const repostHttp = () => {
+    return http.get(`reports/type/1`)
 }
